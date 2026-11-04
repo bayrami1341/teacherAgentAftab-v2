@@ -1,0 +1,126 @@
+- generic [ref=f1e3]:
+  - banner [ref=f1e4]:
+    - generic [ref=f1e6]:
+      - generic [ref=f1e8]:
+        - generic [ref=f1e9]: 🌿
+        - generic [ref=f1e11]:
+          - generic [ref=f1e12]:
+            - heading "جوانه — پلتفرم یکپارچه مدارس" [level=1] [ref=f1e13]
+            - generic [ref=f1e14]: میزکار معلم
+          - generic [ref=f1e18]:
+            - generic [ref=f1e19]: کلاس سوم الف (محیط تست دانش‌آموزی)
+            - generic [ref=f1e20]: •
+            - generic [ref=f1e21]: شبکه‌ی محلی / آفلاین
+      - generic [ref=f1e29]:
+        - generic [ref=f1e30]:
+          - button "🌿 باغچه جوانه" [ref=f1e31] [cursor=pointer]:
+            - generic [ref=f1e32]: 🌿
+            - generic [ref=f1e33]: باغچه جوانه
+          - button "📐 دستیار معلم" [ref=f1e34] [cursor=pointer]:
+            - generic [ref=f1e35]: 📐
+            - generic [ref=f1e36]: دستیار معلم
+          - button "🌸 روشا v1.0 (۹ دهان)" [ref=f1e37] [cursor=pointer]:
+            - generic [ref=f1e38]: 🌸
+            - generic [ref=f1e39]: روشا v1.0 (۹ دهان)
+        - generic [ref=f1e40]:
+          - button "👩‍🏫 معلم" [ref=f1e41] [cursor=pointer]:
+            - generic [ref=f1e42]: 👩‍🏫
+            - generic [ref=f1e43]: معلم
+          - button "🎒 دانش‌آموز" [ref=f1e44] [cursor=pointer]:
+            - generic [ref=f1e45]: 🎒
+            - generic [ref=f1e46]: دانش‌آموز
+      - generic [ref=f1e47]:
+        - button "تنظیم صدا" [ref=f1e48]
+        - button "کلید نقش‌ها 🔐" [ref=f1e53] [cursor=pointer]
+        - button "📖 راهنمای کاربری" [ref=f1e58] [cursor=pointer]:
+          - generic [ref=f1e59]: 📖
+          - generic [ref=f1e60]: راهنمای کاربری
+        - button "🛡️ حالت پناهگاه" [ref=f1e61] [cursor=pointer]:
+          - generic [ref=f1e62]: 🛡️
+          - generic [ref=f1e63]: حالت پناهگاه
+        - button "شبیه‌ساز ریتم روز" [ref=f1e64] [cursor=pointer]
+        - button "گفت‌وگوی امروز" [ref=f1e67] [cursor=pointer]
+        - button "حالت تخته‌ای" [ref=f1e72] [cursor=pointer]
+        - button "چاپ" [ref=f1e79] [cursor=pointer]
+  - main [ref=f1e84]:
+    - generic [ref=f1e85]:
+      - generic [ref=f1e86]:
+        - generic [ref=f1e87]: 🧪
+        - generic [ref=f1e88]:
+          - strong [ref=f1e89]: "پلتفرم یکپارچه مدارس:"
+          - text: شما در حال حاضر در ماژول
+          - strong [ref=f1e90]: «نگهبان گیاه (جوانه)»
+          - text: هستید. برای ورود به ماژول
+          - strong [ref=f1e91]: «دستیار معلم و ریاضی»
+          - text: دکمه بالای صفحه را بزنید.
+      - generic [ref=f1e92]:
+        - button "تزریق ۲۰ گیاه (حالت دمو)" [ref=f1e93] [cursor=pointer]
+        - button "باغچه تمیز نو" [ref=f1e94] [cursor=pointer]
+    - generic [ref=f1e164]:
+      - generic [ref=f1e165]:
+        - generic [ref=f1e166]:
+          - generic [ref=f1e167]:
+            - generic [ref=f1e168]: 🌱
+            - heading "امروز حال باغچه خوب است؛ ۳ جوانه در حال رشد و همراهی‌اند." [level=2] [ref=f1e169]
+          - generic [ref=f1e170]: رادار ۱۰ ثانیه‌ای ریتم کلاسی
+        - generic "هماهنگی و شادابی کلی باغچه" [ref=f1e172]
+      - generic [ref=f1e173]:
+        - generic [ref=f1e174]:
+          - generic [ref=f1e175]:
+            - generic [ref=f1e176]: رویدادهای شادی‌بخش اخیر
+            - generic [ref=f1e181]:
+              - generic [ref=f1e182]:
+                - generic [ref=f1e183]: 🕊️
+                - generic [ref=f1e184]: سارا و امیرعلی صبح امروز به گیاهانشان سر زدند 🌿
+              - generic [ref=f1e185]:
+                - generic [ref=f1e186]: 🌸
+                - generic [ref=f1e187]: «نارنجک» به مرحله‌ی ۵ رسیده و آماده بذردهی است 🌸
+          - paragraph [ref=f1e188]: این خبرها بر اساس رویدادهای زنده و واقعی ۴۸ ساعت گذشته ثبت شده‌اند.
+        - generic [ref=f1e189]:
+          - generic [ref=f1e190]:
+            - generic [ref=f1e191]:
+              - generic [ref=f1e192]: نیازمند گفت‌وگو و احوالپرسی
+              - generic [ref=f1e196]: حداکثر ۳ تا ۵ پیشنهاد
+            - 'button "گیاه «جوانه» (علی) 2 روزه ندیده پیشنهاد: می‌تونی ازش بپرسی دیشب «جوانه» چه خوابی دیده؛ یک سر زدن کوتاه کافیه." [ref=f1e198] [cursor=pointer]':
+              - generic [ref=f1e199]:
+                - generic [ref=f1e200]:
+                  - generic [ref=f1e201]: گیاه «جوانه»
+                  - generic [ref=f1e202]: (علی)
+                  - generic [ref=f1e203]: 2 روزه ندیده
+                - paragraph [ref=f1e204]: "پیشنهاد: می‌تونی ازش بپرسی دیشب «جوانه» چه خوابی دیده؛ یک سر زدن کوتاه کافیه."
+          - paragraph [ref=f1e209]: کلیک روی هر مورد، کارت گفت‌وگو و جزئیات تکالیف را برای معلم باز می‌کند.
+    - generic [ref=f1e95]:
+      - generic [ref=f1e96]:
+        - generic [ref=f1e97]:
+          - generic [ref=f1e210]:
+            - heading "باغچه‌ی زنده‌ی کلاس" [level=2] [ref=f1e211]
+            - generic [ref=f1e212]: 3 گلدان
+          - paragraph [ref=f1e213]: روی هر گلدان کلیک کنید تا کارت گفت‌وگو و رویاهای کودک باز شود.
+        - generic [ref=f1e98]:
+          - button "همه (3)" [ref=f1e214] [cursor=pointer]
+          - button "نیازمند توجه (1)" [ref=f1e215] [cursor=pointer]
+          - button "شاداب‌ها (2)" [ref=f1e216] [cursor=pointer]
+          - button "شکوفا شده (2)" [ref=f1e217] [cursor=pointer]
+      - generic [ref=f1e218]:
+        - button "گیاه جوانه، وضعیت longing" [ref=f1e219] [cursor=pointer]:
+          - generic "رویای دیشب فعال است" [ref=f1e220]: 🌙
+          - img "گیاه مرحله 3 با حالت longing" [ref=f1e222]
+          - generic [ref=f1e264]:
+            - generic [ref=f1e265]: جوانه
+            - generic [ref=f1e266]: دلتنگ
+        - button "گیاه آفتاب‌گردان، وضعیت thriving" [ref=f1e268] [cursor=pointer]:
+          - generic "رویای دیشب فعال است" [ref=f1e269]: 🌙
+          - img "گیاه مرحله 4 با حالت thriving" [ref=f1e271]
+          - generic [ref=f1e321]:
+            - generic [ref=f1e322]: آفتاب‌گردان
+            - generic [ref=f1e323]: شاداب
+        - button "گیاه نارنجک، وضعیت thriving" [ref=f1e325] [cursor=pointer]:
+          - generic [ref=f1e326]: نسل 2
+          - generic "رویای دیشب فعال است" [ref=f1e327]: 🌙
+          - img "گیاه مرحله 5 با حالت thriving" [ref=f1e329]
+          - generic [ref=f1e384]:
+            - generic [ref=f1e385]: نارنجک
+            - generic [ref=f1e386]: شاداب
+    - generic [ref=f1e160]:
+      - paragraph [ref=f1e161]: «این باغچه برای مراقبت و گفت‌وگو است، نه رتبه‌بندی یا ایجاد گناه.»
+      - paragraph [ref=f1e162]: "منبع حقیقت احساس: مدت غیبت واقعی • سازگار با شبکه محلی و مدارس غیرحضوری ایران"

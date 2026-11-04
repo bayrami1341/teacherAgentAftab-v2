@@ -1,0 +1,152 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - generic [ref=e8]:
+        - generic [ref=e9]: 🌿
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - heading "جوانه — پلتفرم یکپارچه مدارس" [level=1] [ref=e13]
+            - generic [ref=e14]: میزکار معلم
+          - generic [ref=e18]:
+            - generic [ref=e19]: کلاس سوم الف (محیط تست دانش‌آموزی)
+            - generic [ref=e20]: •
+            - generic [ref=e21]: شبکه‌ی محلی / آفلاین
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - button "🌿 باغچه جوانه" [ref=e31] [cursor=pointer]:
+            - generic [ref=e32]: 🌿
+            - generic [ref=e33]: باغچه جوانه
+          - button "📐 دستیار معلم" [ref=e34] [cursor=pointer]:
+            - generic [ref=e35]: 📐
+            - generic [ref=e36]: دستیار معلم
+          - button "🌸 روشا v1.0 (۹ دهان)" [ref=e37] [cursor=pointer]:
+            - generic [ref=e38]: 🌸
+            - generic [ref=e39]: روشا v1.0 (۹ دهان)
+        - generic [ref=e40]:
+          - button "👩‍🏫 معلم" [ref=e41] [cursor=pointer]:
+            - generic [ref=e42]: 👩‍🏫
+            - generic [ref=e43]: معلم
+          - button "🎒 دانش‌آموز" [ref=e44] [cursor=pointer]:
+            - generic [ref=e45]: 🎒
+            - generic [ref=e46]: دانش‌آموز
+      - generic [ref=e47]:
+        - button "تنظیم صدا" [ref=e48]
+        - button "کلید نقش‌ها 🔐" [ref=e53] [cursor=pointer]
+        - button "📖 راهنمای کاربری" [ref=e58] [cursor=pointer]:
+          - generic [ref=e59]: 📖
+          - generic [ref=e60]: راهنمای کاربری
+        - button "🛡️ حالت پناهگاه" [ref=e61] [cursor=pointer]:
+          - generic [ref=e62]: 🛡️
+          - generic [ref=e63]: حالت پناهگاه
+        - button "شبیه‌ساز ریتم روز" [ref=e64] [cursor=pointer]
+        - button "گفت‌وگوی امروز" [ref=e67] [cursor=pointer]
+        - button "حالت تخته‌ای" [ref=e72] [cursor=pointer]
+        - button "چاپ" [ref=e79] [cursor=pointer]
+  - main [ref=e84]:
+    - generic [ref=e163]:
+      - generic [ref=e164]:
+        - generic [ref=e165]:
+          - generic [ref=e166]: 🌸
+          - generic [ref=e167]:
+            - generic [ref=e168]:
+              - heading "نسخهٔ روشا v1.0 — موتور قطعی ۹ دهان ضرب" [level=1] [ref=e169]
+              - generic [ref=e170]: ایزوله و آفلاین
+            - paragraph [ref=e171]: تشخیص قطعی بدون تخمین و مدل زبانی • ماشین وضعیت گره دو خطایی • گزارش ۳ ستونی صبح معلم
+        - generic [ref=e172]:
+          - button "بارگذاری و قالب اکسل برون‌سپاری" [ref=e173] [cursor=pointer]
+          - button "بازگشت به جوانه" [ref=e178] [cursor=pointer]
+      - generic [ref=e182]:
+        - generic [ref=e183]:
+          - button "🌙 کار عصر دانش‌آموز (فقط ۱ کار)" [ref=e184] [cursor=pointer]
+          - button "☀️ گزارش صبح معلم (۳ ستونی)" [ref=e185] [cursor=pointer]
+          - link "⚡ میزکار کودک (student.html)" [ref=e186] [cursor=pointer]:
+            - /url: /student.html
+            - generic [ref=e187]: ⚡
+            - generic [ref=e188]: میزکار کودک (student.html)
+        - generic [ref=e193]:
+          - generic [ref=e194]:
+            - generic [ref=e195]: "پایه:"
+            - button "۱ ۵" [ref=e196] [cursor=pointer]:
+              - generic [ref=e197]: ۱
+              - generic [ref=e198]: ۵
+            - button "۲ ۱" [ref=e199] [cursor=pointer]:
+              - generic [ref=e200]: ۲
+              - generic [ref=e201]: ۱
+            - button "۳ ۱۲" [ref=e202] [cursor=pointer]:
+              - generic [ref=e203]: ۳
+              - generic [ref=e204]: ۱۲
+            - button "۴ ۳" [ref=e205] [cursor=pointer]:
+              - generic [ref=e206]: ۴
+              - generic [ref=e207]: ۳
+            - button "۵ ۵" [ref=e208] [cursor=pointer]:
+              - generic [ref=e209]: ۵
+              - generic [ref=e210]: ۵
+            - button "۶ ۷" [ref=e211] [cursor=pointer]:
+              - generic [ref=e212]: ۶
+              - generic [ref=e213]: ۷
+          - generic [ref=e215]:
+            - generic [ref=e216]: "مرحله کلاسی:"
+            - button "۱. دسته‌ها (یک‌رقم) ۵" [ref=e217] [cursor=pointer]:
+              - generic [ref=e218]: ۱. دسته‌ها (یک‌رقم)
+              - generic [ref=e219]: ۵
+            - button "۲. شکستن و توزیع ۲" [ref=e220] [cursor=pointer]:
+              - generic [ref=e221]: ۲. شکستن و توزیع
+              - generic [ref=e222]: ۲
+            - button "۳. صفر، یک و بزرگ‌تر ۵" [ref=e223] [cursor=pointer]:
+              - generic [ref=e224]: ۳. صفر، یک و بزرگ‌تر
+              - generic [ref=e225]: ۵
+      - generic [ref=e226]:
+        - generic [ref=e227]:
+          - generic [ref=e228]:
+            - generic [ref=e229]: "نام دانش‌آموز:"
+            - combobox [ref=e230]:
+              - option "علی" [selected]
+              - option "سارا"
+              - option "امیرعلی"
+              - option "روژان"
+              - option "کیان"
+          - generic [ref=e231]:
+            - generic [ref=e232]:
+              - button "« قبلی" [disabled] [ref=e233] [cursor=pointer]
+              - generic [ref=e234]: تمرین 1 از 5
+              - button "بعدی »" [ref=e235] [cursor=pointer]
+            - generic [ref=e236]: پایه ۳ • دسته‌های مساوی
+            - generic [ref=e237]: STAGE-1
+        - generic [ref=e238]:
+          - generic [ref=e239]: 🔩
+          - generic [ref=e240]: 🔩
+          - generic [ref=e241]: 🔩
+          - generic [ref=e242]: 🔩
+          - generic [ref=e243]:
+            - generic [ref=e244]:
+              - generic [ref=e245]: ⚡
+              - generic [ref=e246]: کارگاه نیروگاه یادگیری • واحد تأمین انرژی ذهن
+            - generic [ref=e247]:
+              - generic [ref=e248]: جریان برق متصل
+              - generic [ref=e250]: ۲۲۰ ولت
+          - generic [ref=e251]:
+            - generic [ref=e252]: 🔧 چالش تک‌گامی تعمیر نیروگاه • فقط ۱ کار بدون حواس‌پرتی
+            - generic [ref=e254]:
+              - generic [ref=e255]: ۳ بسته، هر بسته ۴ تا. چند تا است
+              - generic "جعبهٔ مجهول" [ref=e256]: ؟
+          - generic [ref=e257]:
+            - generic [ref=e258]:
+              - generic [ref=e259]:
+                - generic [ref=e260]:
+                  - text: ⚡
+                  - generic [ref=e261]: "[+] ترمینال مثبت"
+                - generic [ref=e262]: محفظه قرار دادن فیوز
+                - generic [ref=e263]:
+                  - generic [ref=e264]: قطب منفی [-]
+                  - text: ⚡
+              - textbox "عدد فیوز را بنویس..." [active] [ref=e266]
+            - button "⚡ اتصال فیوز و ثبت نهایی جریان ✓" [ref=e267] [cursor=pointer]:
+              - generic [ref=e268]: ⚡
+              - generic [ref=e269]: اتصال فیوز و ثبت نهایی جریان
+              - generic [ref=e270]: ✓
+            - button "🔧 آچار راهنمای کارگاهی (۱ پله تذکر مفهومی)" [ref=e272] [cursor=pointer]
+          - generic [ref=e274]:
+            - generic [ref=e275]:
+              - strong [ref=e276]: "وضعیت داخلی «علی»:"
+              - text: روان و بدون گره (Clear)
+            - generic [ref=e277]: "تعداد تکرار خطای آشنا: ۰ بار • کل رخدادها: ۰"

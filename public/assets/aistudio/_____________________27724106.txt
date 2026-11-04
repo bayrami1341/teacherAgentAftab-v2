@@ -1,0 +1,482 @@
+
+```
+یک وب‌اپلیکیشن React + Tailwind بساز. اسمش «جوانه — باغچه‌ی کلاس» است. یک پنل معلم.
+
+## ۰. زمینه (بخوان قبل از هر چیز)
+
+«جوانه» یک بازی مراقبت از گیاه برای کودکان ۸ ساله است. هر کودک، یک گیاه دارد. گیاه، بر اساس مدت غیبت کودک، «حال» عوض می‌کند. این پنل، برای **معلم** است.
+
+### جایگاه در ۶ لایه‌ی مالکیت
+این پنل، لایه‌ی ۴ از ۶ لایه است:
+1. مالک پلتفرم (`/admin`) — پنل جدا
+2. مدرسه (`/school`) — پنل جدا
+3. کلاس — زیرمجموعه‌ی مدرسه
+4. **معلم (این پنل)** ← این را می‌سازیم
+5. دانش‌آموز (PWA) — جدا
+6. والدین (بله) — جدا
+
+این پنل **فقط** برای معلم است. هیچ‌کدام از لایه‌های دیگر را نساز.
+
+### فلسفه (نقض نکن)
+- هیچ عدد، امتیاز، رتبه، لیدربورد، میانگین، یا مقایسه‌ای نباشد.
+- معلم «مراقب» است، نه «کنترل‌کننده».
+- گیاه باید «دعوت به مراقبت» کند، نه «ایجاد گناه».
+- منبع حقیقت: **مدت واقعی غیبت** — نه امتیاز، نه عملکرد.
+- گیاهان پژمرده، نشان داده می‌شوند — اما نه با رنگ قرمز، نه با متن هشدار.
+
+### جمله‌ی راهنما
+«هرچه کودک بیشتر مراقبت کند، گیاهش نه قوی‌تر، بلکه خاص‌تر و پرخاطره‌تر شود.»
+
+---
+
+## ۱. مدل داده (TypeScript)
+
+```typescript
+type Mood = 'thriving' | 'content' | 'longing' | 'alert';
+type Stage = 1 | 2 | 3 | 4 | 5;
+
+interface Plant {
+  id: string;
+  plantName: string;       // «جوانه»، «سبزه»، «گل»
+  childName: string;       // «علی»، «مریم» — فقط در Drawer
+  gen: number;             // 1, 2, 3...
+  mood: Mood;
+  stage: Stage;
+  growthDays: number;      // 5-25
+  lastSeenDays: number;    // 0-7
+  activeDream: string | null;
+  memoriesCount: number;   // 0-10
+  archived: boolean;       // گیاه پیر
+}
+
+interface RadarData {
+  overall: 'good' | 'mixed' | 'needs_care';
+  overallMessage: string;  // «امروز حال باغچه متوسط است.»
+  needsAttentionCount: number;
+  needsAttention: Array<{
+    childName: string;
+    plantName: string;
+    mood: 'longing' | 'alert';
+    lastSeenDays: number;
+    hint: string;          // پیشنهاد یک‌خطی
+  }>;
+  goodNews: Array<{
+    type: 'comeback' | 'stage' | 'seed' | 'dream';
+    text: string;
+  }>;
+  healthPercentage: number; // 0-100 برای نوار پیشرفت (بدون نمایش عدد)
+}
+
+interface ClassData {
+  className: string;       // «کلاس سوم الف»
+  totalPlants: number;
+  radar: RadarData;
+  plants: Plant[];
+  seedBank: Plant[];       // archived plants
+}
+```
+
+### تولید mock
+
+```typescript
+function generateMockClass(): ClassData {
+  // ۲۰ گیاه با تنوع
+  // - ۸ thriving
+  // - ۶ content
+  // - ۴ longing
+  // - ۲ alert
+  // - ۵ بذر در seedBank
+  // - ۳ نفر در needsAttention
+  // - ۲ خبر خوب
+  // - healthPercentage: 65
+}
+```
+
+---
+
+## ۲. ساختار کامپوننت
+
+```
+App
+├── Header
+│   ├── Logo («جوانه — باغچه‌ی کلاس»)
+│   ├── Button «حالت تخته‌ای»
+│   ├── Button «گفت‌وگوی امروز»
+│   └── Button «چاپ» (icon)
+├── RadarCard
+│   ├── OverallMessage
+│   ├── ProgressBar (بدون عدد)
+│   ├── GoodNewsList
+│   └── NeedsAttentionList (۳ نفر)
+├── Garden
+│   └── PlantCard × 20
+├── SeedBank (collapsible)
+│   └── SeedCard × 5
+├── Drawer (conditional)
+├── BoardMode (conditional، fullscreen)
+├── ConversationModal (conditional)
+└── PrintView (hidden, only for print)
+```
+
+---
+
+## ۳. طراحی بصری
+
+### رنگ‌ها
+```css
+--color-green-primary: #7BA05B;    /* سبز اصلی */
+--color-green-light: #A5CC85;      /* سبز روشن */
+--color-green-pale: #C8D9B5;       /* سبز کم‌رنگ */
+--color-green-dark: #5A7A3F;       /* سبز تیره */
+--color-cream: #FDFBF5;            /* کرم پس‌زمینه */
+--color-orange-soft: #E8A87C;      /* نارنجی ملایم (dلتنگ) */
+--color-text-primary: #2D2D2D;     /* متن اصلی */
+--color-text-secondary: #7A7A7A;   /* متن ثانویه */
+```
+
+### تایپوگرافی
+- فونت: Vazirmatn (Google Fonts) — وزن ۴۰۰ و ۶۰۰
+- سایز پایه: ۱۶px
+- سایز عنوان: ۲۰px
+- سایز متن کوچک: ۱۴px
+- سایز تخته‌ای: ۲۴px
+
+### RTL
+- `dir="rtl"` روی `<html>`
+- Tailwind: از `text-right` و `space-x-reverse` استفاده کن
+
+### فاصله‌گذاری
+- padding کارت‌ها: ۱۶px
+- فاصله بین کارت‌ها: ۱۲px
+- border-radius: ۱۶px (کارت‌ها)، ۱۲px (دکمه‌ها)
+
+---
+
+## ۴. چهار حالت mood — دقیق
+
+| mood | رنگ | وضعیت بدن | انیمیشن | ذرات |
+|---|---|---|---|---|
+| **thriving** | #7BA05B (سبز روشن) + درخشش ملایم | صاف، کمی بزرگ‌تر (scale 1.05) | نفس ۴s | ۲ ذره طلایی هر ۵ ثانیه |
+| **content** | #7BA05B (سبز معمولی) | صاف | نفس ۴s | بدون |
+| **longing** | #A5CC85 (سبز کم‌رنگ) + حلقه‌ی نارنجی #E8A87C دور گلدان (opacity 0.3) | خم ۵ درجه به چپ | نفس ۶s | بدون |
+| **alert** | #C8D9B5 (سبز خیلی کم‌رنگ) | خم ۱۰ درجه، کوچک‌تر (scale 0.95) | نفس ۸s | بدون |
+
+### SVG گیاه (ساختار ثابت)
+```svg
+<svg viewBox="0 0 100 120">
+  <!-- ساقه -->
+  <path d="M50 110 Q48 70 50 40" stroke="currentColor" stroke-width="4" fill="none"/>
+  <!-- برگ چپ -->
+  <path d="M50 80 Q30 70 28 55 Q38 60 50 70 Z" fill="currentColor" opacity="0.9"/>
+  <!-- برگ راست -->
+  <path d="M50 65 Q70 55 72 40 Q62 45 50 55 Z" fill="currentColor" opacity="0.9"/>
+  <!-- سر -->
+  <circle cx="50" cy="35" r="14" fill="currentColor"/>
+  <!-- چشم‌ها -->
+  <circle cx="45" cy="33" r="2.5" fill="#2D2D2D"/>
+  <circle cx="55" cy="33" r="2.5" fill="#2D2D2D"/>
+  <!-- دهان (لبخند ملایم) -->
+  <path d="M46 40 Q50 42 54 40" stroke="#2D2D2D" stroke-width="1" fill="none"/>
+</svg>
+```
+
+### انیمیشن نفس
+```css
+@keyframes breathe-4s {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+.plant-thriving, .plant-content { animation: breathe-4s 4s ease-in-out infinite; }
+.plant-longing { animation: breathe-4s 6s ease-in-out infinite; }
+.plant-alert { animation: breathe-4s 8s ease-in-out infinite; }
+```
+
+### Hover
+```css
+.plant-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(123, 160, 91, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+```
+
+---
+
+## ۵. RadarCard — دقیق
+
+### محتوا
+1. **جمله‌ی کلی**: بر اساس healthPercentage
+   - ≥۷۰: «امروز حال باغچه خوبه.»
+   - ۴۰–۶۹: «امروز حال باغچه متوسط است.»
+   - <۴۰: «امروز باغچه نیاز به مراقبت داره.»
+
+2. **نوار پیشرفت** (بدون عدد):
+   - ارتفاع: ۸px
+   - رنگ: gradient از #C8D9B5 به #7BA05B
+   - عرض: به اندازه‌ی healthPercentage
+   - انیمیشن: fill از ۰ در ۱ ثانیه
+
+3. **خبرهای خوب** (اگر وجود دارد):
+   - آیکون + متن
+   - مثال: «۲ نفر بعد از چند روز برگشته‌اند.»
+   - مثال: «۲ گیاه، تازه شکوفا شده‌اند.»
+
+4. **نیاز به توجه** (اگر وجود دارد):
+   - حداکثر ۳ نفر
+   - هر ردیف: «[نام] — [X] روزه ندیده — پیشنهاد: [hint]»
+   - hover: پس‌زمینه‌ی ملایم
+   - کلیک: باز کردن Drawer همان گیاه
+
+### حالت خالی
+- اگر هیچ‌کس نیاز به توجه ندارد: «امروز، همه‌ی گیاهان حالشون خوبه.»
+- اگر باغچه خالی است: «هنوز هیچ گیاهی کاشته نشده.»
+
+---
+
+## ۶. Garden — دقیق
+
+### چیدمان
+- `display: flex; flex-wrap: wrap; gap: 16px;`
+- هر گیاه: `width: 80px; height: 100px;`
+- **فاصله‌های نامنظم**: از `margin-top` تصادفی بین ۰ تا ۱۶px استفاده کن (به هر گیاه)
+- justify-content: center
+
+### PlantCard
+- SVG در بالا (۶۰px)
+- نام گیاه در پایین (۱۴px، رنگ #2D2D2D)
+- background: transparent
+- padding: 8px
+- border-radius: 12px
+
+### حالت بارگذاری
+- ۲۰ اسکلت خاکستری با انیمیشن shimmer
+- بعد از ۵۰۰ms (mock)، داده‌ی واقعی جایگزین
+
+---
+
+## ۷. Drawer — دقیق
+
+### باز شدن
+- از پایین
+- max-height: 60vh
+- animation: `slide-up 0.3s ease-out`
+- backdrop: `rgba(0,0,0,0.3)` با fade
+
+### محتوا (به ترتیب)
+1. **Header**: نام گیاه + نام کودک + نسل — با دکمه‌ی «بستن» (×)
+2. **وضعیت**: «۳ روزه ندیده» (اگر ۰: «امروز دیده»)
+3. **مرحله**: «شکوفا» (بر اساس stage)
+4. **رویای اخیر**: اگر activeDream != null
+   - آیکون ماه + متن
+   - مثال: «دیشب خواب دیدم یه پروانه بودم...»
+5. **تعداد روزهای مراقبت**: «۱۸ روز با هم»
+6. **پیشنهاد گفت‌وگو**: «می‌تونی ازش بپرسی دیشب گیاهش چه خوابی دیده.»
+7. **دکمه‌ی بستن** (پایین)
+
+### بسته شدن
+- کلیک روی backdrop
+- کلیک روی دکمه‌ی «بستن»
+- کلید Escape
+
+---
+
+## ۸. SeedBank — دقیق
+
+### حالت جمع‌شده (پیش‌فرض)
+- یک ردیف: «بذرخانه — ۵ بذر» + آیکون chevron
+- padding: ۱۲px
+- border-top: 1px solid #E5E5E5
+
+### حالت باز
+- ۵ گیاه در یک ردیف افقی (scroll اگر لازم)
+- هر بذر:
+  - SVG خاکستری (#B0B0B0)
+  - نام گیاه
+  - «نسل [X] — [ماه]»
+  - مثال: «نسل ۱ — مهر»
+
+### ترتیب
+- بر اساس `gen` (نزولی) — جدیدترین اول
+- اگر gen برابر: بر اساس نام (الفبایی)
+
+---
+
+## ۹. Board Mode — دقیق
+
+### ورود
+- کلیک روی «حالت تخته‌ای»
+- animation: fade-in تمام‌صفحه (۰.۳s)
+
+### محتوا
+- فقط گیاهان thriving + content (نه longing، نه alert)
+- گیاهان longing/alert: **خاکستری ملایم** (#B0B0B0) — نه حذف، نه قرمز
+- نام گیاه: ۲۴px، وزن ۶۰۰
+- فاصله‌ی بیشتر بین گیاهان
+
+### جمله‌ی پایین
+- بر اساس healthPercentage (مثل RadarCard)
+- فونت: ۲۰px
+- در پایین صفحه، وسط‌چین
+
+### خروج
+- دکمه‌ی «خروج» در گوشه‌ی بالا-چپ
+- کلید Escape
+
+### به‌روزرسانی
+- هر ۳۰ ثانیه، خودکار refresh (اگر داده تغییر کرد)
+
+---
+
+## ۱۰. Conversation Modal — دقیق
+
+### محتوا
+- عنوان: «پیشنهاد گفت‌وگوی امروز:»
+- ۳ پیشنهاد، بر اساس mood کلاس:
+  - اگر ≥۲ alert: «امروز، دو تا از گیاهان بی‌تابن. می‌تونی بپرسی "کسی دوست داره از گیاهش بگه؟"»
+  - اگر ≥۲ longing: «چند تا گیاه دل‌تنگن. یه بازدید کوتاه کافیه.»
+  - اگر ≥۲ thriving: «امروز باغچه حالش خوبه. می‌تونی ازشون بپرسی "گیاهتون امروز چه شکلیه؟"»
+- دکمه‌ی «بستن»
+
+### بسته شدن
+- کلیک روی دکمه
+- کلیک روی backdrop
+- Escape
+
+---
+
+## ۱۱. Print View — دقیق
+
+### چطور فعال می‌شود
+- کلیک روی «چاپ»
+- `window.print()`
+
+### چه چیزی چاپ می‌شود
+- Header (ساده)
+- RadarCard (همه)
+- Garden (فقط گیاهان + نام + وضعیت با متن — نه SVG)
+- SeedBank (فقط نام + نسل)
+- **مخفی**: دکمه‌ها، Drawer، Modal
+
+### CSS
+```css
+@media print {
+  .no-print { display: none; }
+  .garden { page-break-inside: avoid; }
+}
+```
+
+---
+
+## ۱۲. مدیریت State
+
+از `useState` استفاده کن (بدون Redux/Zustand):
+
+```typescript
+const [classData, setClassData] = useState<ClassData | null>(null);
+const [loading, setLoading] = useState(true);
+const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
+const [boardMode, setBoardMode] = useState(false);
+const [conversationModal, setConversationModal] = useState(false);
+const [seedBankOpen, setSeedBankOpen] = useState(false);
+```
+
+### useEffect برای بارگذاری
+```typescript
+useEffect(() => {
+  setTimeout(() => {
+    setClassData(generateMockClass());
+    setLoading(false);
+  }, 500);
+}, []);
+```
+
+---
+
+## ۱۳. دسترسی‌پذیری (a11y)
+
+- هر PlantCard: `role="button"`, `tabIndex={0}`, `aria-label={plantName}`
+- کلید Enter/Space: باز کردن Drawer
+- Drawer: `role="dialog"`, `aria-modal="true"`, focus روی دکمه‌ی بستن
+- Escape: بستن Drawer/Modal
+- کنتراست رنگ: حداقل ۴.۵:۱
+- `prefers-reduced-motion`: غیرفعال کردن انیمیشن‌های غیرضروری
+
+---
+
+## ۱۴. حالت‌های لبه
+
+| سناریو | چه چیزی نشان بده |
+|---|---|
+| بارگذاری | ۲۰ skeleton با shimmer |
+| خطا | «مشکلی پیش اومد. دوباره امتحان کن.» + دکمه‌ی retry |
+| باغچه خالی | «هنوز هیچ گیاهی کاشته نشده.» + آیکون دانه |
+| هیچ نیاز به توجه | «امروز، همه‌ی گیاهان حالشون خوبه.» |
+| هیچ خبر خوب | بخش news را کاملاً مخفی کن |
+| هیچ بذر | SeedBank را کاملاً مخفی کن |
+| Drawer باز + کلیک روی گیاه دیگر | Drawer جدید باز شود (تعویض) |
+
+---
+
+## ۱۵. قواعد سخت (نقض نکن)
+
+- هیچ رتبه، امتیاز، لیدربورد، میانگین، درصد، یا مقایسه‌ای
+- هیچ «آفرین»، «عالی»، «بارک الله»
+- هیچ رنگ قرمز خالص (#FF0000، #E53935) — نه در هشدار، نه در دکمه
+- گیاهان پژمرده: «دعوت به مراقبت»، نه «ایجاد گناه»
+- در حالت تخته‌ای: هیچ گیاه longing/alert با رنگ تیره — فقط خاکستری ملایم
+- هیچ اعلان پوش، هیچ تایمر، هیچ فشار زمانی
+
+---
+
+## ۱۶. خروجی مورد انتظار
+
+کد کامل React + Tailwind در یک فایل `App.jsx`. تمام.
+
+شامل:
+- تمام کامپوننت‌ها
+- generateMockClass()
+- CSS (اگر لازم)
+- بدون نیاز به فایل خارجی (به‌جز Tailwind + Vazirmatn از Google Fonts)
+```
+
+---
+
+## بخش سوم: چرا این پرامپت بهتر است؟
+
+| ویژگی | پرامپت قبلی | پرامپت جدید |
+|---|---|---|
+| فلسفه | ❌ | ✅ (بخش ۰) |
+| جایگاه در ۶ لایه | ❌ | ✅ (بخش ۰) |
+| مدل داده | فقط mock | ✅ TypeScript + interface |
+| ساختار کامپوننت | ❌ | ✅ (بخش ۲) |
+| رنگ‌های دقیق | فقط ۳ رنگ | ✅ CSS variables |
+| حالت‌های mood | توضیح کلی | ✅ جدول دقیق |
+| SVG گیاه | «ساقه، دو برگ» | ✅ کد کامل |
+| انیمیشن | «نفس ملایم» | ✅ CSS دقیق |
+| Drawer | فقط محتوا | ✅ باز/بسته، Escape |
+| SeedBank | فقط ایده | ✅ حالت، ترتیب |
+| Board Mode | فقط محتوا | ✅ ورود/خروج، refresh |
+| Print | فقط دکمه | ✅ CSS کامل |
+| State | ❌ | ✅ useState |
+| a11y | ❌ | ✅ |
+| Edge cases | ❌ | ✅ ۷ سناریو |
+| قواعد سخت | خلاصه | ✅ ۶ قاعده |
+
+---
+
+## بخش چهارم: بعد از پیست کردن
+
+بعد از اینکه Gemini جواب داد، **این سه چیز را بررسی کن**:
+
+1. **آیا گیاهان حالات مختلف دارند؟** — thriving سبز روشن، alert خاکستری-سبز
+2. **آیا Drawer از پایین باز می‌شود؟** — نه از راست، نه از چپ
+3. **آیا در Board Mode، گیاهان longing/alert خاکستری می‌شوند؟** — نه حذف، نه قرمز
+
+اگر هر کدام نبود، به Gemini بگو. با هم درست می‌کنیم.
+
+---
+
+**حالا برو، پیست کن، و برگرد با نتیجه.**
+
+اگر Gemini چیزی را ناقص ساخت، **فقط همان بخش** را دوباره پرامپت کن — نه کل را.

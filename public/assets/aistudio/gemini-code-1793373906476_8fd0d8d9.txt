@@ -1,0 +1,105 @@
+فایل برنامه را بر اساس ساختار استاندارد داده‌های ران‌تایم پایه سوم (G3-1404-RUNTIME) به‌روزرسانی کن. نیازی به خواندن هیچ فایل خارجی نیست؛ ماتریس داده‌ها به صورت شیء جاوااسکریپت در زیر آمده است:
+
+const G3_RUNTIME_CONFIG = {
+  version: "1404",
+  pageRange: { start: 7, end: 150 },
+  excludedPages: [151, 152], // صفحات پایانی و نظرسنجی کاملاً حذف هستند
+  chapterOpeners: [7, 25, 43, 61, 79, 97, 115, 133], // لوحه‌ها: وضعیت ریاضی‌نیست، بدون کارت آزمون
+  
+  // ۶ سفارش شکل‌محور کتاب درسی برای مغازه و پستو (بدون عدد حاصل)
+  orders: [
+    {
+      id: "ord_g3_01",
+      title: "سه دستهٔ چهارتایی",
+      factorA: 3,
+      factorB: 4,
+      displays: ["trays", "tally", "beads"],
+      mouths: ["add_instead_of_mult", "skip_count_error"]
+    },
+    {
+      id: "ord_g3_02",
+      title: "چهار دستهٔ سه‌تایی",
+      factorA: 4,
+      factorB: 3,
+      displays: ["trays", "tally", "beads"],
+      mouths: ["add_instead_of_mult", "skip_count_error"]
+    },
+    {
+      id: "ord_g3_03",
+      title: "پنج جفت (دسته‌های دوتایی)",
+      factorA: 5,
+      factorB: 2,
+      displays: ["trays", "tally"],
+      mouths: ["add_instead_of_mult", "skip_count_error"]
+    },
+    {
+      id: "ord_g3_04",
+      title: "آرایهٔ مستطیلی دو در شش",
+      factorA: 2,
+      factorB: 6,
+      displays: ["array", "tally"],
+      mouths: ["add_instead_of_mult", "skip_count_error"]
+    },
+    {
+      id: "ord_g3_05",
+      title: "شکستن آرایه ۳ در ۷ با پایه‌های ۵ و ۲",
+      factorA: 3,
+      factorB: 7,
+      displays: ["split_array", "split_trays"],
+      mouths: ["add_instead_of_mult", "half_split"]
+    },
+    {
+      id: "ord_g3_06",
+      title: "بسته‌های ده‌تایی ارزش مکانی",
+      factorA: 4,
+      factorB: 10,
+      displays: ["bundles", "rods"],
+      mouths: ["add_instead_of_mult", "missing_tens"]
+    }
+  ],
+
+  // کارت‌های دام و هندسهٔ خطا (Mouths)
+  mouthDefinitions: {
+    add_instead_of_mult: {
+      faTitle: "جمع را به‌جای دسته دیده",
+      visual: "flat_row", // ردیف باز پیوسته به تعداد A + B بدون خطوط دسته‌بندی
+      clinicalSolution: "تفکیک ظرف و مظروف با بشقاب‌های خالی و توزیع مهره در هر بشقاب"
+    },
+    skip_count_error: {
+      faTitle: "در شمارش لغزیده",
+      visual: "off_by_one", // دسته‌های مساوی با یک دانه کمتر یا بیشتر در یکی از دسته‌ها
+      clinicalSolution: "لمس پله‌ای چوب‌خط‌ها همراه با ریتم صوتی گام‌شمار"
+    },
+    half_split: {
+      faTitle: "در شکستن عامل لغزیده",
+      visual: "bad_split", // تجزیه نامتقارن آرایه دو رنگ (مثلاً ۳×۴ و ۳×۳ به‌جای ۳×۵ و ۳×۲)
+      clinicalSolution: "تا زدن برگه شطرنجی روی مرز ستون پنجم"
+    },
+    missing_tens: {
+      faTitle: "بسته ده‌تایی را تکی دیده",
+      visual: "loose_units", // دانه‌ها یا نی‌های آزاد بدون نوار بسته‌بندی
+      clinicalSolution: "لمس ضخامت و وزن ۱۰ نی کش‌خورده در مقایسه با تک‌نی"
+    }
+  },
+
+  // درخت پیش‌نیاز مهارت‌های محوری (کارت‌ها)
+  skillsTree: {
+    "SK-STEP": { name: "شمارش چندتاچندتا", parent: null, birth: 8 },
+    "SK-GROUP": { name: "دسته‌بندی مساوی", parent: "SK-STEP", birth: 11 },
+    "SK-CHAIN": { name: "زنجیره محاسبات", parent: "SK-STEP", birth: 12 },
+    "SK-TIMES": { name: "مفهوم و عبارت ضرب", parent: "SK-GROUP", birth: 64 },
+    "SK-COMM": { name: "خاصیت جابه‌جایی", parent: "SK-TIMES", birth: 71 },
+    "SK-DIV": { name: "مفهوم تقسیم عادلانه", parent: "SK-TIMES", birth: 73 },
+    "SK-PART": { name: "مفهوم جزء و کل", parent: null, birth: 44 },
+    "SK-FRAC": { name: "کسر متعارفی", parent: "SK-PART", birth: 44 },
+    "SK-PERI": { name: "محیط چندضلعی", parent: null, birth: 85 },
+    "SK-AREA": { name: "مساحت مستطیل", parent: "SK-TIMES", birth: 89 }
+  }
+};
+
+دستورات اعمال در کد بازی:
+۱. شیء G3_RUNTIME_CONFIG را در بدنهٔ جاوااسکریپت جایگزین الگوهای قدیمی کن.
+۲. تابع makeDeal را به گونه‌ای متصل کن که دست‌ها منحصراً از آرایهٔ G3_RUNTIME_CONFIG.orders خوانده شوند.
+۳. در اطلس بالینی تب صبح، متن تشخیصی و راهکارهای دست‌ورزی را مستقیماً از G3_RUNTIME_CONFIG.mouthDefinitions بازخوانی کن؛ هیچ فرمول عددی، نمره یا نام هاردکدشده‌ای نمایش داده نشود.
+۴. در ساخت کارت‌های دام، فقط کدهای بصری مجاز (flat_row, off_by_one, bad_split, loose_units) بدون عدد رندر شوند.
+۵. عدم اتصال به اینترنت و حفظ داده‌ها منحصراً در localStorage.

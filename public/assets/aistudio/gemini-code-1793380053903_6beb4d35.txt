@@ -1,0 +1,110 @@
+پیکربندی ران‌تایم و موتور بازی ریاضی را بر مبنای ساختار استاندارد داده‌های پایه چهارم (G4-1404-RUNTIME) اعمال و بازنویسی کن. نیازی به بارگذاری فایل اکسل نیست؛ شیء جاوااسکریپت داده‌ها در زیر آمده است:
+
+const G4_RUNTIME_CONFIG = {
+  version: "1404",
+  pageRange: { start: 1, end: 154 },
+  chapterOpeners: [1, 23, 45, 75, 97, 118, 140], // لوحه‌ها: وضعیت ریاضی‌نیست، بدون کارت آزمون
+  
+  // ۶ سفارش شکل‌محور کتاب درسی پایه چهارم برای مغازه و پستو (بدون عدد حاصل)
+  orders: [
+    {
+      id: "ord_g4_01",
+      title: "مساحت متوازی‌الاضلاع (قاعده و ارتفاع عمود)",
+      factorA: 4, // ارتفاع
+      factorB: 6, // قاعده
+      displays: ["parallelogram_grid", "tally_grid"],
+      mouths: ["adjacent_as_height", "perimeter_confusion"]
+    },
+    {
+      id: "ord_g4_02",
+      title: "مساحت مثلث قائم‌الزاویه و حاده",
+      factorA: 3, // ارتفاع
+      factorB: 8, // قاعده (حاصل تقسیم بر ۲ = ۱۲)
+      displays: ["triangle_grid", "split_rectangle"],
+      mouths: ["adjacent_as_height", "missing_half_div"]
+    },
+    {
+      id: "ord_g4_03",
+      title: "مدل مساحتی ضرب دو رقم در دو رقم (توزیع‌پذیری)",
+      factorA: 14,
+      factorB: 23,
+      displays: ["area_model_blocks", "sub_rectangles"],
+      mouths: ["missing_tens_product", "add_instead_of_mult"]
+    },
+    {
+      id: "ord_g4_04",
+      title: "عدد مخلوط و کسر بزرگتر از واحد",
+      factorA: 2, // دو واحد کامل
+      factorB: 3, // سه چهارم (۲ و ۳/۴)
+      displays: ["mixed_fraction_circles", "tape_units"],
+      mouths: ["improper_fraction_slip", "part_whole_mismatch"]
+    },
+    {
+      id: "ord_g4_05",
+      title: "نمایش اعشاری دهم با نوار واحد",
+      factorA: 1, // یک واحد کامل
+      factorB: 7, // هفت دهم (۱٫۷)
+      displays: ["decimal_strip", "tenth_grid"],
+      mouths: ["decimal_separator_confusion", "tenth_hundredth_slip"]
+    },
+    {
+      id: "ord_g4_06",
+      title: "سهم‌بندی تقسیم فرآیندی با دسته‌های مساوی",
+      factorA: 48,
+      factorB: 4,
+      displays: ["division_bundles", "fair_share_trays"],
+      mouths: ["remainder_overflow", "step_skip_error"]
+    }
+  ],
+
+  // کارت‌های دام و هندسهٔ خطا بر مبنای کتاب چهارم (Mouths)
+  mouthDefinitions: {
+    adjacent_as_height: {
+      faTitle: "ضلع مایل را به‌جای ارتفاع عمود گرفته",
+      visual: "slanted_side_highlight", // برجسته کردن ضلع مجاور غیرعمود به‌جای خط‌چین ارتفاع
+      clinicalSolution: "فرود آوردن شاقول یا تطبیق لبه گونیا از رأس بر امتداد قاعده"
+    },
+    missing_tens_product: {
+      faTitle: "بسته ده‌تایی را در ضرب چندرقمی رها کرده",
+      visual: "dropped_zero_block", // نمایش حاصل‌ضرب بدون ارزش مکانی صدگان و ده‌گان
+      clinicalSolution: "باز کردن مستطیل به ۴ بخش مجزا با رنگ‌های متمایز و برچسب ده‌تایی"
+    },
+    improper_fraction_slip: {
+      faTitle: "واحد کامل را نشمرده و کسر را پیوسته دیده",
+      visual: "unsplit_units", // نمایش شکل‌ها بدون تفکیک واحد کامل از باقیمانده
+      clinicalSolution: "جدا کردن قرص‌های کامل نان از تکه‌های بریده‌شده"
+    },
+    decimal_separator_confusion: {
+      faTitle: "ممیز را جداکننده دو عدد مستقل دانسته",
+      visual: "split_numbers", // نمایش جزء صحیح و دهم به عنوان دو عدد مجزا
+      clinicalSolution: "استقرار عدد در جدول ارزش مکانی با رنگ متمایز ستون دهم"
+    },
+    remainder_overflow: {
+      faTitle: "باقیمانده بزرگتر از مقسوم‌علیه مانده",
+      visual: "extra_bundle", // یک دسته کامل تقسیم‌نشده در ظرف باقیمانده
+      clinicalSolution: "توزیع مجدد باقیمانده در دسته‌ها تا زمانی که باقیمانده کمتر از مقسوم‌علیه شود"
+    }
+  },
+
+  // درخت پیش‌نیاز مهارت‌های محوری (کارت‌ها)
+  skillsTree: {
+    "SK-STEP": { name: "شمارش چندتاچندتا", parent: null, birth: 3 },
+    "SK-PLACE": { name: "ارزش مکانی تا میلیون", parent: "SK-STEP", birth: 5 },
+    "SK-FRAC": { name: "مفهوم کسر", parent: null, birth: 26 },
+    "SK-MIX": { name: "عدد مخلوط", parent: "SK-FRAC", birth: 28 },
+    "SK-DEC": { name: "اعداد اعشاری", parent: "SK-FRAC", birth: 98 },
+    "SK-PART": { name: "ضرب مساحتی فرآیندی", parent: "SK-PLACE", birth: 48 },
+    "SK-DIV": { name: "تقسیم فرآیندی", parent: "SK-PART", birth: 58 },
+    "SK-ANGLE": { name: "زاویه و گونیا", parent: null, birth: 76 },
+    "SK-PERP": { name: "خطوط عمود بر هم", parent: "SK-ANGLE", birth: 120 },
+    "SK-HEIGHT": { name: "رسم ارتفاع", parent: "SK-PERP", birth: 130 },
+    "SK-AREA": { name: "مساحت متوازی‌الاضلاع و مثلث", parent: "SK-HEIGHT", birth: 132 }
+  }
+};
+
+دستورات اعمال در کد بازی:
+۱. شیء G4_RUNTIME_CONFIG را در فایل اسکریپت بارگذاری کن.
+۲. چرخه سفارش‌های مغازه و پستو را به orders همین شیء متصل کن؛ نمایش روی کارت‌ها باید کاملاً شهودی، لمسی و بدون عدد حاصل باشد.
+۳. در اطلس بالینی تب صبح، توضیحات تشخیصی و راهکارهای دست‌ورزی را مستقیماً از mouthDefinitions بخوان.
+۴. هیچ فرمول، معادله، نمره یا نام هاردکدشده‌ای در ستون‌های صبح نمایش داده نشود.
+۵. داده‌ها منحصراً روی localStorage ذخیره شده و هیچ تله‌متری آنلاینی وجود نداشته باشد.

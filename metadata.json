@@ -1,0 +1,8 @@
+{
+  "name": "Remix جوانه — باغچه‌ی کلاس",
+  "description": "پنل مراقبت عاطفی و پایش ریتم عادات روزانه دانش‌آموزان برای معلمان در دوران آموزش مجازی و مدارس غیرحضوری، مبتنی بر پیوند عاطفی با گیاه و بدون مقایسه یا رتبه‌بندی.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
