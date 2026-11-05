@@ -2,7 +2,8 @@
 import { Lock, Play, AlertCircle, Sparkles } from 'lucide-react';
 import { ToolRegistry } from '../../modules/tools/registry';
 import { ToolMetadata } from '../../modules/tools/base-tool.interface';
-import { SecurityContext } from '../../core/security/security-gatekeeper';
+import { GardenWorkspace } from './workspaces/GardenWorkspace';
+import { MathWorkspace } from './workspaces/MathWorkspace';
 
 interface ToolsCatalogProps {
   tenantId: string;
@@ -13,18 +14,20 @@ interface ToolsCatalogProps {
 export const ToolsCatalog: React.FC<ToolsCatalogProps> = ({ tenantId, userRole, onLaunchTool }) => {
   const { licensed, unlicensed } = ToolRegistry.getLicensedToolsForTenant(tenantId);
   const [selectedToolStatus, setSelectedToolStatus] = useState<string | null>(null);
+  const [activeToolWorkspace, setActiveToolWorkspace] = useState<string | null>(null);
 
   const handleLaunch = (tool: ToolMetadata) => {
-    const context: SecurityContext = { userId: 'usr-current', role: userRole, tenantId, sessionToken: 'active-session-token' };
-    const instance = ToolRegistry.createToolInstance(tool.id);
-    if (!instance) return;
-    instance.initialize(context)
-      .then(() => {
-        setSelectedToolStatus(`ابزار «${tool.name}» با موفقیت فعال شد.`);
-        if (onLaunchTool) onLaunchTool(tool.id);
-      })
-      .catch((err) => setSelectedToolStatus(`خطای امنیتی: ${err.message}`));
+    setActiveToolWorkspace(tool.id);
+    if (onLaunchTool) onLaunchTool(tool.id);
   };
+
+  if (activeToolWorkspace === 'tool-garden') {
+    return <GardenWorkspace tenantId={tenantId} userRole={userRole} onClose={() => setActiveToolWorkspace(null)} />;
+  }
+
+  if (activeToolWorkspace === 'tool-math-39') {
+    return <MathWorkspace tenantId={tenantId} userRole={userRole} onClose={() => setActiveToolWorkspace(null)} />;
+  }
 
   return (
     <div className="space-y-6" dir="rtl">
