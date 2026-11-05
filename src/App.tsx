@@ -1,3 +1,5 @@
+import { OwnerLicensePanel } from './components/owner/OwnerLicensePanel';
+import { ToolsCatalog } from './components/tools/ToolsCatalog';
 import React, { useState, useEffect, useCallback } from 'react';
 import { ClassData, Plant, Mood, AppRole, School, ClassroomInfo, TeacherInfo, PlatformModuleId } from './types';
 import {
@@ -816,6 +818,16 @@ export default function App() {
 
       {/* Printable Report View */}
       {classData && <PrintView classData={classData} />}
+                {/* --- بخش جدید: مدیریت پلتفرم و لایسنس --- */}
+          <div className="p-6 bg-slate-950 mt-10 border-t border-slate-700" dir="rtl">
+            <h1 className="text-2xl font-bold text-white mb-6 text-center">مدیریت پلتفرم (پنل مالک)</h1>
+            <OwnerLicensePanel />
+            
+            <div className="mt-12">
+              <h2 className="text-xl font-bold text-emerald-400 mb-4 text-center">کاتالوگ ابزارهای مدرسه</h2>
+              <ToolsCatalog tenantId="sch-demo-aftab" userRole="SUPER_ADMIN" />
+            </div>
+          </div>
     </div>
   );
 }
